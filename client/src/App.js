@@ -39,7 +39,7 @@ const App = () => {
 				<Input
 					className="input"
 					type="text"
-					placeholder={'Add new item, Press "Enter" one you\'ve done typing'}
+					placeholder={'Add new item, Press "Enter" once you\'ve done typing'}
 					onChange={e => setNewItem(e.target.value)}
 				/>
 			</form>
