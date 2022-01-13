@@ -9,7 +9,9 @@ const ListItem = ({ content, isCompleted }) => {
 				<span className={isCompleted ? "line-through" : ""}>{content}</span>
 			</div>
 			<div className="section-2">
-				<button>Delete</button>
+				<button className="delete-btn">
+					<i className="fas fa-trash"></i>
+				</button>
 			</div>
 		</div>
 	);
