@@ -7,5 +7,5 @@ urlpatterns = [
     path('api/todos/update/<str:pk>/', views.update),
     path('api/todos/delete/<str:pk>/', views.delete),
     path('api/todos/all/', views.list),
-    path('api/todos/<str:pk>/', views.detail),
+    path('api/todos/detail/<str:pk>/', views.detail)
 ]
