@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDate } from "../utils/formatDate";
 import { days } from "../utils/days";
 
 const Header = () => {
@@ -6,9 +7,9 @@ const Header = () => {
 	const day = date.getDay();
 
 	return (
-		<header>
+		<header className="header">
 			<h1>
-				{days[day]}, {date.toLocaleDateString("en-GB")}
+				{days[day]}, {formatDate(date.toLocaleDateString("en-GB"))}
 			</h1>
 		</header>
 	);

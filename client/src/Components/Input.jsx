@@ -1,9 +1,9 @@
 import React from "react";
 
-const Input = ({ type, placeholder, disabled }) => {
+const Input = ({ type, placeholder, disabled, ...options }) => {
 	return (
 		<div>
-			<input className="input" type={type} placeholder={placeholder} disabled={disabled} />
+			<input type={type} placeholder={placeholder} disabled={disabled} {...options} />
 		</div>
 	);
 };
