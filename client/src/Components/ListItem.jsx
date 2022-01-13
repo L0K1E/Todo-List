@@ -11,7 +11,7 @@ const ListItem = ({ content, isCompleted, id }) => {
 				<Input
 					type="checkbox"
 					checked={isCompleted}
-					onChange={() => updateListItem(id, { IsCompleted: !isCompleted })}
+					onChange={() => updateListItem(id, { IsCompleted: !isCompleted, id, Content: content })}
 				/>
 				<span className={isCompleted ? "line-through" : ""}>{content}</span>
 			</div>

@@ -1,16 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Headers, Input } from "./Components";
 import { useList } from "./context/ListProvider";
 import "./App.css";
 import ListItem from "./Components/ListItem";
 
 const App = () => {
-	const { items, loading } = useList();
+	const { items, loading, addNewListItem } = useList();
+	const [newItem, setNewItem] = useState("");
 
 	useEffect(() => {
 		const date = new Date();
 		document.title = `Todo, ${date.toLocaleDateString("en-GB")}`;
 	}, []);
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		addNewListItem(newItem);
+	};
 
 	return (
 		<div>
@@ -29,11 +35,14 @@ const App = () => {
 					))
 				)}
 			</div>
-			<Input
-				className="input"
-				type="text"
-				placeholder={'Add new item, Press "Enter" one you\'ve done typing'}
-			/>
+			<form onSubmit={handleSubmit}>
+				<Input
+					className="input"
+					type="text"
+					placeholder={'Add new item, Press "Enter" one you\'ve done typing'}
+					onChange={e => setNewItem(e.target.value)}
+				/>
+			</form>
 		</div>
 	);
 };

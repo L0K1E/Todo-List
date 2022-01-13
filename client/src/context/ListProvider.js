@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getAllItems, updateItem, deleteItem } from "../api/todoApi";
+import { getAllItems, updateItem, deleteItem, addItem } from "../api/todoApi";
 
 export const ListContext = createContext();
 
@@ -20,6 +20,7 @@ export const ListProvider = ({ children }) => {
 				setLoading(false);
 			} catch (err) {
 				console.log(err);
+				setLoading(false);
 			}
 		};
 
@@ -30,11 +31,11 @@ export const ListProvider = ({ children }) => {
 		};
 	}, [update]);
 
-	const updateListItem = async id => {
+	const updateListItem = async (id, body) => {
 		try {
-			const { data, status } = await updateItem(id);
+			const { data, status } = await updateItem(id, body);
 
-			if (status === 200) {
+			if (status === 201) {
 				setUpdate(prev => !prev);
 			}
 			console.log(data);
@@ -55,8 +56,22 @@ export const ListProvider = ({ children }) => {
 		}
 	};
 
+	const addNewListItem = async content => {
+		try {
+			const { data, status } = await addItem(content);
+			if (status === 200) {
+				setUpdate(prev => !prev);
+			}
+			console.log(data);
+		} catch (err) {
+			console.log("addNewListItem", err);
+		}
+	};
+
 	return (
-		<ListContext.Provider value={{ items, loading, updateListItem, deleteListItem }}>
+		<ListContext.Provider
+			value={{ items, loading, updateListItem, deleteListItem, addNewListItem }}
+		>
 			{children}
 		</ListContext.Provider>
 	);
