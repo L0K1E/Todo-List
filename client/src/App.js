@@ -1,9 +1,11 @@
 import React from "react";
+import { Headers, Input } from "./Components";
 
 const App = () => {
 	return (
 		<div>
-			<h1>Hello World!!</h1>
+			<Headers />
+			<Input type="text" placeholder="Add new item" />
 		</div>
 	);
 };
