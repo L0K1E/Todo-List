@@ -1,6 +1,7 @@
+import http
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from api.models import Task
 from  .serializer import TaskSerialzers
 from rest_framework import status
@@ -20,7 +21,7 @@ def api(request):
 def list(request):
     task = Task.objects.all()
     serializer = TaskSerialzers(task, many=True)
-    return Response(serializer.data) 
+    return Response(serializer.data , status.HTTP_200_OK)
 
 @api_view(['GET']) 
 def detail(request, pk):
@@ -33,7 +34,7 @@ def create(request):
     serializer = TaskSerialzers(data= request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+    return Response(serializer.data, status = status.HTTP_201_CREATED)
 
 @api_view(['POST']) 
 def update(request, pk):
@@ -41,10 +42,10 @@ def update(request, pk):
     serializer = TaskSerialzers(instance=task, data= request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data,  status = status.HTTP_201_CREATED) 
+    return Response(serializer.data,  status = status.HTTP_200_OK) 
 
 @api_view(['DELETE']) 
 def delete(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
-    return Response("Record Deleted !") 
+    return Response("Record Deleted !", status.HTTP_200_OK) 
