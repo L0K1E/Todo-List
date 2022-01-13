@@ -1,37 +1,26 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { getAllItems, updateItem, deleteItem } from "../api/todoApi";
 
 export const ListContext = createContext();
 
 export const useList = () => useContext(ListContext);
 
 export const ListProvider = ({ children }) => {
-	const [list, setList] = useState([
-		{
-			id: 1,
-			content: "Hello World",
-			isCompleted: false,
-		},
-		{
-			id: 2,
-			content: "Complete Styling",
-			isCompleted: false,
-		},
-		{
-			id: 3,
-			content: "Complete context",
-			isCompleted: true,
-		},
-		{
-			id: 4,
-			content: "Buy Eggs",
-			isCompleted: false,
-		},
-	]);
-	const [loading, setLoading] = useState(false);
+	const [items, setItems] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
 		const fetchTodoLists = async () => {
-			//
+			try {
+				const { data, status } = await getAllItems();
+				if (status === 200) {
+					setItems(data);
+				}
+				setLoading(false);
+			} catch (err) {
+				console.log(err);
+			}
 		};
 
 		fetchTodoLists();
@@ -39,7 +28,36 @@ export const ListProvider = ({ children }) => {
 		return () => {
 			// cancel request
 		};
-	});
+	}, [update]);
 
-	return <ListContext.Provider value={{ list, loading }}>{children}</ListContext.Provider>;
+	const updateListItem = async id => {
+		try {
+			const { data, status } = await updateItem(id);
+
+			if (status === 200) {
+				setUpdate(prev => !prev);
+			}
+			console.log(data);
+		} catch (err) {
+			console.log("updateListItem", err);
+		}
+	};
+
+	const deleteListItem = async id => {
+		try {
+			const { data, status } = await deleteItem(id);
+			if (status === 200) {
+				setUpdate(prev => !prev);
+			}
+			console.log(data);
+		} catch (err) {
+			console.log("deleteListItem", err);
+		}
+	};
+
+	return (
+		<ListContext.Provider value={{ items, loading, updateListItem, deleteListItem }}>
+			{children}
+		</ListContext.Provider>
+	);
 };

@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from api.models import Task
 from  .serializer import TaskSerialzers
+from rest_framework import status
 
 @api_view(['GET'])
 def api(request):
@@ -40,7 +41,7 @@ def update(request, pk):
     serializer = TaskSerialzers(instance=task, data= request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data) 
+    return Response(serializer.data,  status = status.HTTP_201_CREATED) 
 
 @api_view(['DELETE']) 
 def delete(request, pk):

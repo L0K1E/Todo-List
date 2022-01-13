@@ -5,7 +5,7 @@ import "./App.css";
 import ListItem from "./Components/ListItem";
 
 const App = () => {
-	const { list, loading } = useList();
+	const { items, loading } = useList();
 
 	useEffect(() => {
 		const date = new Date();
@@ -17,10 +17,15 @@ const App = () => {
 			<Headers />
 			<div className="list-item-container">
 				{loading ? (
-					<h1>Loading...</h1>
+					<h1 style={{ textAlign: "center" }}>Loading...</h1>
 				) : (
-					list.map(item => (
-						<ListItem key={item.id} content={item.content} isCompleted={item.isCompleted} />
+					items.map(item => (
+						<ListItem
+							key={item.id}
+							id={item.id}
+							content={item.Content}
+							isCompleted={item.IsCompleted}
+						/>
 					))
 				)}
 			</div>
