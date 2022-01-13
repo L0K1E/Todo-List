@@ -35,7 +35,7 @@ export const ListProvider = ({ children }) => {
 		try {
 			const { data, status } = await updateItem(id, body);
 
-			if (status === 201) {
+			if (status === 200) {
 				setUpdate(prev => !prev);
 			}
 			console.log(data);
@@ -59,7 +59,7 @@ export const ListProvider = ({ children }) => {
 	const addNewListItem = async content => {
 		try {
 			const { data, status } = await addItem(content);
-			if (status === 200) {
+			if (status === 201) {
 				setUpdate(prev => !prev);
 			}
 			console.log(data);
