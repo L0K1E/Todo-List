@@ -8,6 +8,6 @@ def api(request):
         'Detail' : '/api/todos/:id',
         'Create' : '/api/todos/new',
         'Update' : '/api/todos/delete/:id',
-        'Delete' : '/delete/<str:pk>/'
+        'Delete' : '/delete/:id/'
     }
     return Response(api_urls)
